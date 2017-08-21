@@ -66,3 +66,10 @@ function adopt(uint petId) public returns (uint) {
 - **msg.sender** will give you the address or smart contract who called this function
 
 ### Second Function: Retrieving the Adopters
+Array getters only return a single value for a given key. We need a helper function for getting all adopters.
+
+```javascript
+function getAdopters() public returns (address[16]) {
+  return adopters;
+}
+```
