@@ -73,3 +73,46 @@ function getAdopters() public returns (address[16]) {
   return adopters;
 }
 ```
+
+### Compiling and Migrating the Smart Contract
+
+#### Compiling
+- Solidity is a compiled language. We need to compile the code for EVM (Ethereum Virtual Machine) to run.
+
+Open a new terminal and run testrpc. This will start a new local blockchain.
+
+```javascript
+testrpc
+EthereumJS TestRPC v4.0.1 (ganache-core: 1.0.1)
+
+Available Accounts
+==================
+(0) 0x996f29dd606837fe947ba3864e49c72a6e146685
+(1) 0x6aba9e3dfaa8e7fd909689b4fb1b09aff0ca2739
+(2) 0xef0ee327a69815e9aafc0bcb73c21586ecbb382d
+(3) 0x92b70c81494f8e9dab14a29821ce61ecbdf87cd0
+(4) 0x4c95d97b4dfb8bcac3d78f74761c4208364cd7eb
+(5) 0x22b9cdbadd5a320ecaddeb01b6bb8881b275b8d9
+(6) 0xcb7d3c014567554a2bdd495d999d941b2f5583a9
+(7) 0x5a65615b53fa77029276ca1c01b87ced9d32163a
+(8) 0xb1c1b72a08a033d3ebf9a62614965b39196ee4f5
+(9) 0xc341f64bf61d4daf177429f9029c4cf40056d417
+
+Private Keys
+==================
+(0) 0b94f7327280dfbad7f1974e27a4532dffecda795a6d9d30f4fc81823976f7e8
+(1) 4e16391345babd7423567ab7aaf89b27f75aaa8a186287aca5fdcf8bc2a3dcb0
+(2) dc333176e89d4f646e64bddf01bcf261350cfed0d4fac4fe0e9b9a43b7799839
+(3) 132171fa63c70db3496af5c1c2cbb2eb70bf737ef035e8d8f6ee44b77ec23b72
+(4) 49c62668eef171a0019c0b4a412492682f67a4342c87abf8cbcc061d5f1a138c
+(5) d77e04c89ba4dc0f2079221e9127dd8023001c273b3b503b9b23dcbdd91555ff
+(6) db54f99c64a03caca275a265b83209a26bc716e4fe1d99be97e4822177adc982
+(7) 96976c5f43c31497e70c6da8b02f0ebf7ca76888d1444cb2854af3d82381f3b3
+(8) 5db119ca5de792edcebb664052f49c3a6eceb6d0674d38ffdcccf81e5f2bb3d6
+(9) c392a921850ef910c10446575bdc8d467ee3892e88d0880a3b58a8cf696bfa14
+
+HD Wallet
+==================
+Mnemonic:      intact boat prison yard order agent render loud forward cost fashion front
+Base HD Path:  m/44'/60'/0'/0/{account_index}
+```
