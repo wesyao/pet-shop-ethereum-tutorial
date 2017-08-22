@@ -166,3 +166,71 @@ Saving successful migration to network...
   ... 0xf8608252306749e41973dfdb4de517e030cb297ac13877493db1014ed31dd1f8
 Saving artifacts...
 ```
+
+### Testing the Smart Contract
+
+Create `TestAdoption.sol` under the `test` directory
+
+```javascript
+pragma solidity ^0.4.11;
+
+import "truffle/Assert.sol";
+import "truffle/DeployedAddresses.sol";
+import "../contracts/Adoption.sol";
+
+contract TestAdoption {
+  Adoption adoption = Adoption(DeployedAddresses.Adoption());
+  //Tests go here
+}
+```
+We import 3 things:
+- `Assert.sol`: gives us various assertions to use in our tests. In testing, an assertion checks for things like equality, inequality or emptiness to return a pass/fail boolean from our test.
+- `DeployedAddresses.sol`: When running tests, Truffle will deploy a fresh instance of the contract being tested to the TestRPC. This smart contract gets the address of the deployed contract.
+- The smart contract we want to test (Adoption.sol).
+
+#### Testing adopt()
+
+Test a function on a smart contract by writing a function and checking an assertion.
+```javascript
+function testUserCanAdoptPet() {
+  uint returnedId = adoption.adopt(8);
+
+  uint expected = 8;
+
+  // testedValue, expectedValue, error message if failure
+  Assert.equal(returnedId, expected, "Adoption of pet ID 8 should be recorded.");
+}
+```
+
+Data will persist throughout the entire life of the test. We can test the getter for the adoption variable.
+
+Since TestAdoption will be sending the transaction, we set the value to `this`. This is because `this` is a contract wide variable that gets the current contract's address.
+
+```javascript
+function testGetAdopterAddressByPetId() {
+  address expected = this;
+
+  address adopter = adoption.adopters(8);
+
+  Assert.equal(adopter, expected, "Owner of pet ID 8 should be recorded.");
+}
+```
+
+#### Testing getAdopters()
+
+`public` provides automatic getters. However, solidity arrays can only provide a single value per key. This is why we wrote getAdopters().
+
+`memory` property tells solidity to store the value in memory instead of contract storage.
+```javascript
+function testGetAdopterAddressByPetIdInArray() {
+  address expected = this;
+
+  address[16] memory adopters = adoption.getAdopters();
+
+  Assert.equal(adopters[8], expected, "Owner of pet ID 8 should be recorded.");
+}
+```
+
+#### Run Tests
+
+Run `truffle test`
