@@ -127,7 +127,7 @@ truffle compile
 
 - `1_initial_migration.js.` handles deploying the Migrations.sol contract to observe subsequent smart contract migrations.
 
-Migrations are executed in their enumerated order and follow the same basic structure:
+Migrations are executed in the order specified and follow the same basic structure:
 
 - Import the desired contract artifacts from the build folder.
 - Export a single, anonymous function taking one argument, `deployer`.
@@ -234,3 +234,33 @@ function testGetAdopterAddressByPetIdInArray() {
 #### Run Tests
 
 Run `truffle test`
+
+## Creating UI to interact with Smart Contract
+Up to this point we:
+1. built the smart contract
+2. built & migrated the contract to our local blockchain
+3. interacted with the blockchain through tests
+
+Now we need to create an UI to interact with the smart contract.
+
+### Instantiating Web3
+Open `app.js` and notice we initialize the app from the `init` function. `init` also calls `initWeb3`.
+
+Web3 is a JavaScript library for interacting with the Ethereum blockchain
+Etherum browsers like [Mist](https://github.com/ethereum/mist) or chrome extension [MetaMask](https://metamask.io/) will inject their own instance of web3.
+
+This is not suitable for production.
+
+Remove the comments and replace with
+```javascript
+// Initialize web3 and set the provider to the testRPC.
+if (typeof web3 !== 'undefined') {
+  App.web3Provider = web3.currentProvider;
+  web3 = new Web3(web3.currentProvider);
+} else {
+  // set the provider you want from Web3.providers
+  App.web3Provider = new web3.providers.HttpProvider('http://localhost:8545');
+  web3 = new Web3(App.web3Provider);
+}
+```
+
