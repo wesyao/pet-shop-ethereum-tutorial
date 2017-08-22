@@ -79,7 +79,7 @@ function getAdopters() public returns (address[16]) {
 #### Compiling
 - Solidity is a compiled language. We need to compile the code for EVM (Ethereum Virtual Machine) to run.
 
-Open a new terminal and run testrpc. This will start a new local blockchain.
+Open a new terminal and run testrpc. This will start a new local blockchain. This will provide you a set of accounts, keys, and a wallet.
 
 ```javascript
 testrpc
@@ -115,4 +115,54 @@ HD Wallet
 ==================
 Mnemonic:      intact boat prison yard order agent render loud forward cost fashion front
 Base HD Path:  m/44'/60'/0'/0/{account_index}
+```
+
+Compile your contract in another terminal.
+```javascript
+truffle compile
+```
+
+#### Migration
+- **migration** is a deployment script meant to alter the state of your application's contracts, moving it from one state to the next. This may be deploying new code or even replacing contracts.
+
+- `1_initial_migration.js.` handles deploying the Migrations.sol contract to observe subsequent smart contract migrations.
+
+Migrations are executed in their enumerated order and follow the same basic structure:
+
+- Import the desired contract artifacts from the build folder.
+- Export a single, anonymous function taking one argument, `deployer`.
+- Order the deployment of a given contract with `deployer.deploy(<< CONTRACT_NAME >>)`.
+
+##### Create Adoption Migration
+Create `2_deploy_contracts.js` in `migrations` directory.
+
+```javascript
+var Adoption = artifacts.require("./Adoption.sol");
+
+module.exports = function(deployer) {
+  deployer.deploy(Adoption);
+};
+```
+
+run `truffle migrate`
+
+Notice the migrations are ran in order followed by the addresses of the deployed contracts
+
+```javascript
+Using network 'development'.
+
+Running migration: 1_initial_migration.js
+  Deploying Migrations...
+  ... 0xe5d04056e4eefb2290ccc6bb4e08e278a529064d94c64aac930f0f9dcf7e341f
+  Migrations: 0x97d1311a040e8efffff834abbad746daefbd04e5
+Saving successful migration to network...
+  ... 0xdb4dda88d726456a75383d29f2bcc4f5b958f88db15d14c547f92f5cb7171492
+Saving artifacts...
+Running migration: 2_deploy_contracts.js
+  Deploying Adoption...
+  ... 0x8ab3559b156479b2c743325ed1d42583f9aa27f452304b0979e603465a52fcbb
+  Adoption: 0xdf02daf5124e6bded7e21de155163d98bf8563fd
+Saving successful migration to network...
+  ... 0xf8608252306749e41973dfdb4de517e030cb297ac13877493db1014ed31dd1f8
+Saving artifacts...
 ```
