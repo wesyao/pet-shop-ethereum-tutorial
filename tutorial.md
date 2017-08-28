@@ -264,3 +264,23 @@ if (typeof web3 !== 'undefined') {
 }
 ```
 
+### Instantiate Contract
+We need to instantiate our contract so that `web3` knows where to find the contract. Truffle has a nice library for this called `truffle-contract`. This keeps the information in sync during migration.
+
+Take another look at `initContract` inside `app.js`. Replace the comments with this block.
+
+What this is doing is `artifact` file (Adoption.json) for our contract. `Artifacts` contain information about the contract such as deployed addresses and `ABI` (Application Binary Interface). The `ABI` contains information about variables and functions of your contract.
+
+```javascript
+$.getJSON('Adoption.json', function(data) {
+  // Get the necessary contract artifact file and instantiate it with truffle-contract.
+  var AdoptionArtifact = data;
+  App.contracts.Adoption = TruffleContract(AdoptionArtifact);
+
+  // Set the provider for our contract.
+  App.contracts.Adoption.setProvider(App.web3Provider);
+
+  // Use our contract to retieve and mark the adopted pets.
+  return App.markAdopted();
+});
+```
